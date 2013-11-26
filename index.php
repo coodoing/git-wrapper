@@ -38,6 +38,8 @@ $this->assertEmpty($result->getStdErr());
 $this->assertEquals(0, $result->getReturnCode());
 $this->assertStringStartsWith('git version', $result->getStdOut());
 $this->assertSame($call, $result->getCliCall());*/
+//phpinfo();
 die('finished');
+
 
 ?>
