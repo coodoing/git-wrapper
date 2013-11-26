@@ -2,3 +2,9 @@ git-wrapper
 ===========
 
 php git wrapper
+
+项目基于PHP5.2.10，git进行开发
+
+http://github.com/kbjr/Git.php
+
+https://github.com/teqneers/PHP-Stream-Wrapper-for-Git
