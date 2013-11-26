@@ -1,4 +1,7 @@
 <?php
+/*
+ * For more detail infomation, visit the php-stream-wrapper
+ */
 /**
  * Encapsulates access to the a VCS command line binary
  *
@@ -48,7 +51,7 @@ class Binary
             throw new InvalidArgumentException(
                 sprintf(
                     'The $binary argument must either
-                     be a TQ\Vcs\Binary instance or a path to the VCS binary (%s given)',
+                     be a Binary instance or a path to the VCS binary (%s given)',
                     (is_object($binary)) ? get_class($binary) : gettype($binary)
                 )
             );
