@@ -2,6 +2,7 @@
 /*
  * GitRepository class
  */
+require_once('Util.php');
 class GitRepository{
 	private $repos_path;
 	private $git;
@@ -34,7 +35,7 @@ class GitRepository{
 	// validate the correctness of the git operation
 	// 
 	protected function validate(){
-		
+
 	}
 
 	protected function run($command){
@@ -43,7 +44,7 @@ class GitRepository{
 		$call = new Call($this->cmd,$this->repos_path);
 		$result = $call->execute();
 		//echo '<pre>';var_dump($result);
-		return $result;		
+		return $result;	// the result need to be translated to array 
 	}
 
 	public function openRepository($repos){
@@ -56,6 +57,16 @@ class GitRepository{
 
 	// references
 	public function getReferences(){
+
+	}
+
+	// .git/logs
+	public function getReferenceHistory($ref){
+
+	}
+
+	// .git/refs
+	public function getBranchCommit($branch){
 
 	}
 
@@ -79,7 +90,7 @@ class GitRepository{
 	public function getCurrentBranch(){
 		$result = $this->run('branch');
 		//echo '<pre>';var_dump($result);
-		echo $result->getStdOut();
+		echo $result->getStdOut(); 
 	}
 
 	public function getBranchStatus($branch){
@@ -87,10 +98,14 @@ class GitRepository{
 	}
 
 	public function getCurrentBranchHashes($branch){
-
+		return $this->readOriginHead();
 	}
 
 	public function getTags(){
+
+	}
+
+	public function getBlobs(){
 
 	}
 
@@ -101,6 +116,11 @@ class GitRepository{
 		$result = $call->execute();
 		//echo '<pre>';var_dump($result);
 		echo $result->getStdOut();
+	}
+
+
+	public function gitInit(){
+
 	}
 
 	public function gitClone(){
@@ -114,6 +134,7 @@ class GitRepository{
 
 	public function gitStash(){
 		//exec($GIT_STASH);
+
 	}
 
 	public function gitPush(){
@@ -132,7 +153,7 @@ class GitRepository{
 
 	}
 
-	public function resolveConflict(){
+	public function gitResolveConflict(){
 
 	}
 	
@@ -148,10 +169,14 @@ class GitRepository{
 
 	//////////////////////////////////////////////////////
 	protected function readOriginHead(){
-
+		//echo ORIG_HEAD_PATH;
+		$content = file_get_contents('.git/ORIG_HEAD');
+		trimBrNotation(&$content);
+		echo ($content);
 	}
 
 	protected function readFetchHead(){
+		$handle = fopen('.git/FETCH_HEAD');
 
 	}
 
@@ -160,8 +185,11 @@ class GitRepository{
 	}
 
 	protected function readLogsHead(){
+		
 
 	}
+
+
 
 }
 
