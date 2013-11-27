@@ -8,6 +8,7 @@ define('GIT_BINARY_WIN','/bin/git');
 define('GIT_REPOSITORY_PATH','/var/www/vhosts');
 define('GIT_REPOSITORY_PATH_WIN','D:\\project\\git');
 define('CURRENT_WORK_REPOS','D:\\Work\\php\\git-wrapper');
+define('CURRENT_WORK_REPOS','D:\\project\\test\\git-wrapper');
 if(strpos(PHP_OS, 'WIN') !== false){
 	//$BIN_PATH = GIT_BINARY_WIN;
 	//$REPOSITORY_PATH = GIT_REPOSITORY_PATH_WIN;

@@ -1,5 +1,4 @@
 <?php
-
 // https://github.com/coodoing/oEmbed/blob/master/autoloader/config.php
 function __autoload($className){	
 	//echo 'execute';

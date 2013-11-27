@@ -1,6 +1,6 @@
 <?php
 /*
- * 
+ * GitRepository class
  */
 class GitRepository{
 	private $repos_path;
@@ -15,12 +15,35 @@ class GitRepository{
 		$this->initGitInstance();
 	}
 
+	private function getReposPath(){
+		return $this->repos_path;
+	}
+
+	private function getCmd(){
+		return $this->cmd;
+	}
+
 	// initialization git
 	protected function initGitInstance(){
 		if($this->git == null){
 			$this->git = new Git(BIN_PATH);
 		}
 		return $this->git;
+	}
+
+	// validate the correctness of the git operation
+	// 
+	protected function validate(){
+		
+	}
+
+	protected function run($command){
+		$this->cmd = $this->git->createGitCommand($command);
+		//echo $this->cmd.'-'.$this->repos_path;
+		$call = new Call($this->cmd,$this->repos_path);
+		$result = $call->execute();
+		//echo '<pre>';var_dump($result);
+		return $result;		
 	}
 
 	public function openRepository($repos){
@@ -54,7 +77,9 @@ class GitRepository{
 	}
 
 	public function getCurrentBranch(){
-
+		$result = $this->run('branch');
+		//echo '<pre>';var_dump($result);
+		echo $result->getStdOut();
 	}
 
 	public function getBranchStatus($branch){
@@ -71,10 +96,11 @@ class GitRepository{
 
 	public function getGitVersion(){
 		$this->cmd = $this->git->createGitCommand('--version');
-		echo $this->cmd.'-'.$this->repos_path;
+		//echo $this->cmd.'-'.$this->repos_path;
 		$call = new Call($this->cmd,$this->repos_path);
 		$result = $call->execute();
-		echo '<pre>';var_dump($result);
+		//echo '<pre>';var_dump($result);
+		echo $result->getStdOut();
 	}
 
 	public function gitClone(){
@@ -102,7 +128,7 @@ class GitRepository{
 
 	}
 
-	public function diff(){
+	public function gitDiff(){
 
 	}
 
@@ -117,6 +143,23 @@ class GitRepository{
 	}
 
 	private function toString(){
+
+	}
+
+	//////////////////////////////////////////////////////
+	protected function readOriginHead(){
+
+	}
+
+	protected function readFetchHead(){
+
+	}
+
+	protected function readRefHead(){
+
+	}
+
+	protected function readLogsHead(){
 
 	}
 

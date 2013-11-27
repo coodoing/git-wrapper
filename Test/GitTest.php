@@ -1,6 +1,6 @@
 <?php
 // repository path
-$_repo = 'D:/project/git/vela.website/';
+$_repo = dirname(__FILE__);
 $_git = '.git/';
 $_git_logs = $_git.'logs/';
 $GIT_PATH = $_repo.$_git;
