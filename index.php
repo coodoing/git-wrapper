@@ -10,9 +10,10 @@ require_once('GitRepository.php');
 //echo BIN_PATH.'-'.CURRENT_WORK_REPOS.'<br>';
 echo 'git repository:<br>';
 $repository = new GitRepository(dirname(__FILE__));
-$repository->getCurrentBranchHashes();
-$repository->getGitVersion();
-$repository->getCurrentBranch();
+//$repository->getGitVersion();
+//$repository->getCurrentBranchCommitHashes();
+//$repository->getCurrentBranch();
+$repository->getResults();
 
 
 echo '<br>base invoking:<br>';
@@ -26,7 +27,6 @@ $result = $call->execute();
 //echo ($result->hasStdErr());
 //echo ($result->getReturnCode());
 echo ($result->getStdOut());
-//phpinfo();
 die('git finished');
 
 ?>

@@ -8,3 +8,5 @@ php git wrapper
 http://github.com/kbjr/Git.php
 
 https://github.com/teqneers/PHP-Stream-Wrapper-for-Git
+
+C:\Program Files (x86)\Git\doc\git\html\
