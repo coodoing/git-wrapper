@@ -36,7 +36,6 @@ echo filemtime('readme.md');
 echo 'git finished';
 echo "<br>////////////////////////////////////////////////////////<br>";
 //$file = new FileSystem();
-
 echo md5('');
 echo file_exists('dg')==false;
 
@@ -47,7 +46,7 @@ $wrapper = new FileWrapper(dirname(__FILE__).'\\test.txt', $file);
 $listener = new FileListener();
 $listener->addListener(new FileWrapper('index.php',$file));
 $listener->addListener(new FileWrapper('README.MD',$file));
-//var_dump($listener->getListeners());
+echo '<pre>';var_dump($listener->getListeners());
 
 $listener->listen();
 

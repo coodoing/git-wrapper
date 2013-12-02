@@ -56,7 +56,7 @@ class FileWrapper{
 	}
 
 	public function getSHA1(){
-		$str = $this->filePath.$this->existed.$this->lastModifiedDate;
+		$str = $this->filePath.'-'.$this->existed.'-'.$this->lastModifiedDate;
 		return sha1($str);
 	}
 

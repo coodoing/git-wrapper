@@ -63,15 +63,19 @@ class FileListener{
 	protected function fileListening(){
 		//echo 'KKKKK';die();
 		foreach($this->fileListeners as $listener){
-			$action = $this->getFileEventStatus($listener);
+			$action = $this->getFileEventAction($listener);
+			echo $action;
 			//$this->onCreated($callback);
 			if(isset($this->actions[$listener->getFilePath()][$action])){
-				var_dump($this->actions[$listener->getFilePath()][$action]);die();
+				//var_dump($this->actions[$listener->getFilePath()][$action]);die();
+				$callback = $this->actions[$listener->getFilePath()][$action];
+				call_user_func($callback,$listener->getFilePath());
+				// array_map(function(){},$listener->getFilePath())
 			}
 		}
 	}
 
-	protected function getFileEventStatus($file){
+	protected function getFileEventAction($file){
 		$action = $file->checkFileStatus()->getEventArgs();
 		switch($action){
 			case FileEvent::CREATED:
@@ -88,7 +92,6 @@ class FileListener{
 				break;
 		}
 	}
-
 	
 }
 ?>
