@@ -7,6 +7,10 @@ require_once('CallResult.php');
 require_once('Git.php');
 require_once('GitRepository.php');
 
+require_once 'File/FileWrapper.php';
+require_once 'File/FileSystem.php';
+require_once 'File/FileListener.php';
+
 //echo BIN_PATH.'-'.CURRENT_WORK_REPOS.'<br>';
 echo 'git repository:<br>';
 $repository = new GitRepository(dirname(__FILE__));
@@ -27,6 +31,26 @@ $result = $call->execute();
 //echo ($result->hasStdErr());
 //echo ($result->getReturnCode());
 echo ($result->getStdOut());
-die('git finished');
+echo '<pre>';var_dump(pathinfo(__FILE__));
+echo filemtime('readme.md');
+echo 'git finished';
+echo "<br>////////////////////////////////////////////////////////<br>";
+//$file = new FileSystem();
+
+echo md5('');
+echo file_exists('dg')==false;
+
+$file = new FileSystem(); 
+$wrapper = new FileWrapper(dirname(__FILE__).'\\test.txt', $file);
+echo '<pre>';var_dump($wrapper->checkFileStatus());
+
+$listener = new FileListener();
+$listener->addListener(new FileWrapper('index.php',$file));
+$listener->addListener(new FileWrapper('README.MD',$file));
+var_dump($listener->getListeners());
+
+$listener->listen();
+
+die('');
 
 ?>

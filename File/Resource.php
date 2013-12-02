@@ -1,5 +1,5 @@
 <?php
-class Resource{
+abstract class Resource{
 	
 }
 ?>
