@@ -1,9 +1,9 @@
 git-wrapper
 ===========
 
-php git wrapper: git hook
+php git wrapper: git hook develop
 
-项目基于PHP5.2.10，git进行开发
+项目基于PHP5.2.10, git进行开发.
 
 http://github.com/kbjr/Git.php
 

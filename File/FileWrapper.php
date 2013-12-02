@@ -1,7 +1,8 @@
 <?php
-// a wrapper of file system
 require_once 'FileSystem.php';
 require_once 'FileEvent.php';
+
+// a wrapper of file system
 class FileWrapper{	
 
 	private $SHA1;	
@@ -59,12 +60,13 @@ class FileWrapper{
 		return sha1($str);
 	}
 
+	public function getFilePath(){
+		return $this->filePath;
+	}
+
 	// subject change
 	public function change(){
 		
 	}	
-
-
-
 }
 ?>

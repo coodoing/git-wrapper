@@ -31,7 +31,7 @@ $result = $call->execute();
 //echo ($result->hasStdErr());
 //echo ($result->getReturnCode());
 echo ($result->getStdOut());
-echo '<pre>';var_dump(pathinfo(__FILE__));
+//echo '<pre>';var_dump(pathinfo(__FILE__));
 echo filemtime('readme.md');
 echo 'git finished';
 echo "<br>////////////////////////////////////////////////////////<br>";
@@ -42,12 +42,12 @@ echo file_exists('dg')==false;
 
 $file = new FileSystem(); 
 $wrapper = new FileWrapper(dirname(__FILE__).'\\test.txt', $file);
-echo '<pre>';var_dump($wrapper->checkFileStatus());
+//echo '<pre>';var_dump($wrapper->checkFileStatus());
 
 $listener = new FileListener();
 $listener->addListener(new FileWrapper('index.php',$file));
 $listener->addListener(new FileWrapper('README.MD',$file));
-var_dump($listener->getListeners());
+//var_dump($listener->getListeners());
 
 $listener->listen();
 

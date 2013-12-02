@@ -6,7 +6,6 @@ class FileEvent{
 	const CHANGED = 2;
 	const UNCHANGED = 3;
 
-
 	private $eventArgs;	 // event args
 	private $eventCode;  // event code
 	private $eventFile;  // event file
