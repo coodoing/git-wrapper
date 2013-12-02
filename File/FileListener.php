@@ -28,7 +28,7 @@ class FileListener{
 				//$this->listening = false;
 				$this->stop();
 			}else{
-				echo 'keep listening';
+				// echo 'keep listening';
 				usleep(1000);
 				$this->fileListening();
 			}
@@ -42,12 +42,13 @@ class FileListener{
 	protected function fileListening(){
 		//echo 'KKKKK';die();
 		foreach($this->fileListeners as $listener){
-
+			$status = $this->getFileEventStatus($listener);
+			//$this->onCreated($callback);
 		}
 	}
 
-	protected function getFileEventStatus($fileWrapper){
-		$status = $fileWrapper->checkFileStatus()->getEventArgs();
+	protected function getFileEventStatus($fileListener){
+		$status = $fileListener->checkFileStatus()->getEventArgs();
 		switch($status){
 			case FileEvent::CREATED:
 				return 'created';
@@ -66,7 +67,7 @@ class FileListener{
 
 	protected function onCreated(Closure $callback){
 		// lambda function and annoymous function
-		
+
 	}
 }
 ?>
