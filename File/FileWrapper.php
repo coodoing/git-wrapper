@@ -47,8 +47,8 @@ class FileWrapper{
 			$this->lastModifiedDate = filemtime($this->filePath);
 			return new FileEvent($this,FileEvent::CHANGED,'changed');
 		}
-		//return '';
-		return new FileEvent($this,FileEvent::UNCHANGED,'unchanged');
+		return '';
+		//return new FileEvent($this,FileEvent::UNCHANGED,'unchanged');
 	}	
 
 	protected function isModified(){
@@ -62,6 +62,10 @@ class FileWrapper{
 
 	public function getFilePath(){
 		return $this->filePath;
+	}
+
+	public function fileExisted(){
+		return $this->existed;
 	}
 
 	// subject change

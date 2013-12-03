@@ -13,23 +13,28 @@ class FileListener{
 		$this->fileListeners = array();
 	}
 
-	public function registerActions($file,$action,Closure $callback){
-		$this->actions[$file->getFilePath()][$action][] = $callback;
+	protected function registerActions($action,Closure $callback){
+		//$this->actions[$file->getFilePath()][$action][] = $callback;
+		$this->actions[$action][] = $callback;
 	}
 
-	protected function onCreated($file,Closure $callback){
-		// lambda function and annoymous function
-		$this->registerActions($file,'created',$callback);
+	public function getActions(){
+		return $this->actions;
 	}
 
-	protected function onDeleted($file,Closure $callback){
+	public function onCreatedEvent(Closure $callback){
 		// lambda function and annoymous function
-		$this->registerActions($file,'deleted',$callback);
+		$this->registerActions('created',$callback);
 	}
 
-	protected function onChanged($file,Closure $callback){
+	public function onDeletedEvent(Closure $callback){
+		// lambda function and annoymous function		
+		$this->registerActions('deleted',$callback);
+	}
+
+	public function onChangedEvent(Closure $callback){
 		// lambda function and annoymous function
-		$this->registerActions($file,'changed',$callback);
+		$this->registerActions('changed',$callback);
 	}
 
 	public function addListener(FileWrapper $fileWrapper){
@@ -40,56 +45,60 @@ class FileListener{
 		return $this->fileListeners;
 	}
 
-	public function listen(){
+	public function startListen(){
 		$t1 = microtime(true);
 		while($this->listening){
 			$t2 = microtime(true);
 			if($t2-$t1>$this->timeInterval){
 				echo 'stop listening';				
 				//$this->listening = false;
-				$this->stop();
+				$this->stopListen();
 			}else{				
-				usleep(1000000);
-				echo 'keep listening';
+				usleep(1000000); // be cautious about the time unit
+				echo 'keep listening'.PHP_EOL;
 				$this->fileListening();
 			}
 		}
 	}
 
-	public function stop(){
+	public function stopListen(){
 		$this->listening = false;
 	}
 
 	protected function fileListening(){
-		//echo 'KKKKK';die();
 		foreach($this->fileListeners as $listener){
 			$action = $this->getFileEventAction($listener);
-			echo $action;
-			//$this->onCreated($callback);
-			if(isset($this->actions[$listener->getFilePath()][$action])){
-				//var_dump($this->actions[$listener->getFilePath()][$action]);die();
-				$callback = $this->actions[$listener->getFilePath()][$action];
-				call_user_func($callback,$listener->getFilePath());
+			echo $listener->getFilePath().'-'.$action.PHP_EOL;
+			//var_dump($this->actions[$action]);
+			echo PHP_EOL;			
+			if(isset($this->actions[$action])){
+				//var_dump($this->actions[$listener->getFilePath()][$action]);				
+				$callback = $this->actions[$action];
+				echo $action.PHP_EOL;
+				print_r($callback);
+				call_user_func($callback,'test.txt');
 				// array_map(function(){},$listener->getFilePath())
 			}
 		}
 	}
 
 	protected function getFileEventAction($file){
-		$action = $file->checkFileStatus()->getEventArgs();
-		switch($action){
-			case FileEvent::CREATED:
-				return 'created';
-				break;
-			case FileEvent::DELETED:
-				return 'deleted';
-				break;
-			case FileEvent::CHANGED:
-				return 'changed';
-				break;
-			case FileEvent::UNCHANGED:
-				return 'unchanged';
-				break;
+		$fileStatus = $file->checkFileStatus();
+		if(!$fileStatus instanceof FileEvent){
+			echo '';
+		}else{
+			$action = $fileStatus->getEventArgs();
+			switch($action){
+				case FileEvent::CREATED:
+					return 'created';
+					break;
+				case FileEvent::DELETED:
+					return 'deleted';
+					break;
+				case FileEvent::CHANGED:
+					return 'changed';
+					break;				
+			}
 		}
 	}
 	

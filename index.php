@@ -34,22 +34,45 @@ echo ($result->getStdOut());
 //echo '<pre>';var_dump(pathinfo(__FILE__));
 echo filemtime('readme.md');
 echo 'git finished';
-echo "<br>////////////////////////////////////////////////////////<br>";
+echo "<br>////////////////////////////////////////////////////////".PHP_EOL;
 //$file = new FileSystem();
 echo md5('');
 echo file_exists('dg')==false;
+echo PHP_EOL;
+
+$callback = function($name){
+	echo $name.'FFFFFF';
+};
+//print_r($callback);
+call_user_func($callback,'FFFFF');
 
 $file = new FileSystem(); 
-$wrapper = new FileWrapper(dirname(__FILE__).'\\test.txt', $file);
-//echo '<pre>';var_dump($wrapper->checkFileStatus());
-
 $listener = new FileListener();
-$listener->addListener(new FileWrapper('index.php',$file));
-$listener->addListener(new FileWrapper('README.MD',$file));
+//$index = new FileWrapper('index.php',$file);
+//$listener->addListener($index);
+//$readme = new FileWrapper('README.MD',$file);
+//$listener->addListener($readme);
+$wrapper = new FileWrapper(dirname(__FILE__).'\\test.txt', $file);
+$listener->addListener($wrapper);
+//echo '<pre>';var_dump($wrapper->checkFileStatus());
 echo '<pre>';var_dump($listener->getListeners());
 
-$listener->listen();
+$listener->onCreatedEvent(function($file){
+	echo "{$file}-created".PHP_EOL;
+});
+$listener->onDeletedEvent(function($file){
+	echo "{$file}-deleted".PHP_EOL;
+});
+$listener->onChangedEvent(function($file){
+	echo "{$file}-changed".PHP_EOL;
+});
+
+$actions = $listener->getActions();
+$listener->startListen();
+
+
+//echo '<pre>';var_dump($actions);
 
 die('');
-
+// phpinfo();
 ?>

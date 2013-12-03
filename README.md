@@ -1,7 +1,7 @@
 git-wrapper
 ===========
 
-php git wrapper: git hook develop
+php git wrapper: git hook develop  
 
 项目基于PHP开发，主要实现PHP的git wrapper，里面同样利用File Listen对文件进行监听
 
