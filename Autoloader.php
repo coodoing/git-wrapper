@@ -6,5 +6,23 @@ function __autoload($className){
 	if (file_exists($className . '.php')) { 
         require_once $className . '.php';        
     } 
+    __autoload_dir();
+}
+
+function __autoload_dir($className){
+	$directories = array(
+		'',
+		'File/',
+		'Git/',
+		'Logs/',
+		'Test/',
+		);
+	foreach($directories as $directory){
+        //see if the file exsists
+        if(file_exists($cls = $directory.$className.'.php')){
+            require_once $cls;
+            return true;
+        }
+    }             
 }
 ?>

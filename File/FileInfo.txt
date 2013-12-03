@@ -3,15 +3,9 @@
 The brute force way to do this would be to just rescan the tree looking for changes, but I'm looking for a more "interrupt driven" solution where the file system tells my code what changed when it changes, rather than my code having to "poll" by continuously scanning through thousands of files looking for changes.
 
 some good thought to take:
-	eventIO : actor callback
+    eventIO : actor callback
     file system change : select poll epoll
     httprequest listener : tomcat
 */
-resource 中detectchanges 获取文件的change状态，返回event
-event主要是资源状态的事件类，包括deleted，created，changed
-tracker类：register方法，注册resouce到listener中
-listener类：注册绑定，建立oncreate, ondelete , onchange
-watcher类:
 
-
-observer-subject 设计模式
+observer pattern

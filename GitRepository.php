@@ -113,7 +113,7 @@ class GitRepository{
 
 	}
 
-	public function getCurrentBranchCommitHashes($branch){
+	public function getCurrentBranchCommitHashes(){
 		// read from ORIG_HEAD
 		return $this->readOriginHead();
 		// get commithashes through git cmd

@@ -15,7 +15,7 @@ class FileListener{
 
 	protected function registerActions($action,Closure $callback){
 		//$this->actions[$file->getFilePath()][$action][] = $callback;
-		$this->actions[$action][] = $callback;
+		$this->actions[$action] = $callback;
 	}
 
 	public function getActions(){
@@ -70,22 +70,36 @@ class FileListener{
 			$action = $this->getFileEventAction($listener);
 			echo $listener->getFilePath().'-'.$action.PHP_EOL;
 			//var_dump($this->actions[$action]);
-			echo PHP_EOL;			
+			//echo PHP_EOL;			
 			if(isset($this->actions[$action])){
 				//var_dump($this->actions[$listener->getFilePath()][$action]);				
 				$callback = $this->actions[$action];
-				echo $action.PHP_EOL;
-				print_r($callback);
+				//echo $action.PHP_EOL;
+				//print_r($callback);
 				call_user_func($callback,'test.txt');
 				// array_map(function(){},$listener->getFilePath())
 			}
 		}
 	}
 
+	public function listening($file){
+		$action = $this->getFileEventAction($file);
+		echo $file->getFilePath().'-'.$action.PHP_EOL;
+		//var_dump($this->actions[$action]);
+		//echo PHP_EOL;			
+		if(isset($this->actions[$action])){
+			//var_dump($this->actions[$file->getFilePath()][$action]);				
+			$callback = $this->actions[$action];
+			//echo $action.PHP_EOL;
+			//print_r($callback);
+			call_user_func($callback,$file->getFilePath());
+		}		
+	}
+
 	protected function getFileEventAction($file){
 		$fileStatus = $file->checkFileStatus();
 		if(!$fileStatus instanceof FileEvent){
-			echo '';
+			echo ''; // file_exist and unchanged
 		}else{
 			$action = $fileStatus->getEventArgs();
 			switch($action){
