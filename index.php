@@ -74,7 +74,6 @@ $listener->onChangedEvent(function($file){
 $actions = $listener->getActions();
 //$listener->startListen();
 
-
 echo "<br>///////////////////////////filewatch/////////////////////////////<br>".PHP_EOL;
 $watcher = new FileWatcher();
 /*
@@ -90,4 +89,5 @@ $watcher->start();
 //echo '<pre>';var_dump($actions);
 die('');
 // phpinfo();
+
 ?>

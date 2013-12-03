@@ -12,15 +12,16 @@ class FileWatcher{
 	private $fileWrappers ;
 	public function __construct(){
 		$this->isWatching = true;
-		$this->timeInterval = 10;
-		$this->fileListeners = array();//$listener;
-		$this->fileWrappers = array();
+		$this->timeInterval = 20;
+		$this->fileListeners = array();//listener;
+		$this->fileWrappers = array(); //filewrapper
 	}
 
 	// add file to the specified listener
 	protected function addListener(FileWrapper $fileWrapper){
 		$key = $fileWrapper->getSHA1();
 		$listener = new FileListener();
+		$listener->registerFileEvent($fileWrapper);
 		$this->fileListeners[$key] = $listener;
 		$this->fileWrappers[$key] = $fileWrapper;
 	}

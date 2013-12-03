@@ -25,7 +25,6 @@ class FileWrapper{
 		$this->fileNewName = $newname;
 		$this->createdDate = $createdate;
 		$this->lastModifiedDate = filemtime($this->filePath);
-
 	}
 
 	// check the file status

@@ -37,6 +37,19 @@ class FileListener{
 		$this->registerActions('changed',$callback);
 	}
 
+	public function registerFileEvent($fileWrapper){
+		$file = $fileWrapper->getFilePath();
+		$this->onCreatedEvent(function($file){
+			echo "{$file}-created".PHP_EOL;
+		});
+		$this->onDeletedEvent(function($file){
+			echo "{$file}-deleted".PHP_EOL;
+		});
+		$this->onChangedEvent(function($file){
+			echo "{$file}-changed".PHP_EOL;
+		});
+	}
+
 	public function addListener(FileWrapper $fileWrapper){
 		$this->fileListeners[] = $fileWrapper;
 	}
