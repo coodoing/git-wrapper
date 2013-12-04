@@ -1,17 +1,14 @@
 <?php
 require_once('Autoloader.php');
 require_once('Configure.php');
-//require_once('Git/Binary.php');
 require_once('Call.php');
 require_once('CallResult.php');
 require_once('Git.php');
 require_once('GitRepository.php');
-
 require_once 'File/FileWrapper.php';
 require_once 'File/FileSystem.php';
 require_once 'File/FileListener.php';
 require_once 'File/FileWatcher.php';
-
 
 echo "<br>//////////////////////////Git Repository//////////////////////////////<br>".PHP_EOL;
 //echo BIN_PATH.'-'.CURRENT_WORK_REPOS.'<br>';
@@ -28,7 +25,6 @@ $call = new Call($cmd, dirname(__FILE__));
 //echo $call->getCmd().'-'.dirname(__FILE__);
 $result = $call->execute();
 //echo '<pre>';var_dump($result);
-
 //echo ($result->hasStdOut());
 //echo ($result->hasStdErr());
 //echo ($result->getReturnCode());
@@ -38,7 +34,8 @@ echo filemtime('readme.md');
 echo 'git finished';
 echo "<br>///////////////////////////SHA1 and MD5/////////////////////////////<br>".PHP_EOL;
 //$file = new FileSystem();
-echo md5('');
+echo md5('').PHP_EOL;
+echo sha1('').PHP_EOL;
 echo file_exists('dg')==false;
 echo PHP_EOL;
 
@@ -46,9 +43,8 @@ echo "<br>///////////////////////////callback method////////////////////////////
 $callback = function($name){
 	echo $name.'FFFFFF';
 };
-print_r($callback);
-call_user_func($callback,'FFFFF');
-
+#print_r($callback);
+call_user_func($callback,'FFFFF').PHP_EOL;
 
 echo "<br>///////////////////////////filelistener/////////////////////////////<br>".PHP_EOL;
 $file = new FileSystem(); 
@@ -83,10 +79,19 @@ $test = new FileWrapper('test.txt',$file);
 */
 $watcher->watch('README.MD');
 $watcher->watch('index.php');
+
+// watch git HEAD
+$watcher->watch('');
+
 echo '<pre>';var_dump($watcher->getWatchList());
 $watcher->start();
 //$watcher->run();
 //echo '<pre>';var_dump($actions);
+
+
+echo "<br>///////////////////////////start dameon process to run/////////////////////////////<br>".PHP_EOL;
+$dameon = 'nohup php index.php > dameonlogs.log 2>&1 &';
+echo $dameon;
 die('');
 // phpinfo();
 

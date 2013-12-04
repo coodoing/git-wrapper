@@ -12,7 +12,7 @@ class FileWatcher{
 	private $fileWrappers ;
 	public function __construct(){
 		$this->isWatching = true;
-		$this->timeInterval = 20;
+		$this->timeInterval = 120;
 		$this->fileListeners = array();//listener;
 		$this->fileWrappers = array(); //filewrapper
 	}
