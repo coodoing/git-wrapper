@@ -59,18 +59,18 @@ $listener->addListener($wrapper);
 echo '<pre>';var_dump($listener->getListeners());
 
 $listener->onCreatedEvent(function($file){
-	echo "{$file}-created".PHP_EOL;
+	echo "{$file}-was created".PHP_EOL;
 });
 $listener->onDeletedEvent(function($file){
-	echo "{$file}-deleted".PHP_EOL;
+	echo "{$file}-was deleted".PHP_EOL;
 });
 $listener->onChangedEvent(function($file){
-	echo "{$file}-changed".PHP_EOL;
+	echo "{$file}-was changed".PHP_EOL;
 });
 $actions = $listener->getActions();
 //$listener->startListen();
 
-echo "<br>///////////////////////////filewatch/////////////////////////////<br>".PHP_EOL;
+echo "<br>///////////////////////////filewatch default listener events/////////////////////////////<br>".PHP_EOL;
 $watcher = new FileWatcher();
 /*
 $index = new FileWrapper('index.php',$file);
@@ -84,10 +84,27 @@ $watcher->watch('index.php');
 $watcher->watch('');
 
 echo '<pre>';var_dump($watcher->getWatchList());
-$watcher->start();
+//$watcher->start();
 //$watcher->run();
 //echo '<pre>';var_dump($actions);
 
+
+echo "<br>///////////////////////////filewatch given events/////////////////////////////<br>".PHP_EOL;
+$watcher = new FileWatcher();
+$listener1 = new FileListener();
+$listener2 = new FileListener();
+$listener1->onCreatedEvent(function($file){
+	echo "{$file}-was created".PHP_EOL;
+});
+$listener1->onDeletedEvent(function($file){
+	echo "{$file}-was deleted".PHP_EOL;
+});
+$listener1->onChangedEvent(function($file){
+	echo "{$file}-was changed".PHP_EOL;
+});
+$watcher->bindingListener('README.MD',$listener1);
+$watcher->bindingListener('index.php',$listener1);
+print_r($watcher->getWatchList());
 
 echo "<br>///////////////////////////start dameon process to run/////////////////////////////<br>".PHP_EOL;
 $dameon = 'nohup php index.php > dameonlogs.log 2>&1 &';

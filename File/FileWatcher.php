@@ -18,7 +18,9 @@ class FileWatcher{
 	}
 
 	// binding the filewrapper and the listener, 
-	public function bindingListener(FileWrapper $fileWrapper, FileListener $listener){
+	public function bindingListener($path, FileListener $listener){
+		$file = new FileSystem();
+		$fileWrapper = new FileWrapper($path,$file);
 		$key = $fileWrapper->getSHA1();
 		$this->fileListeners[$key] = $listener;
 		$this->fileWrappers[$key] = $fileWrapper;
@@ -37,6 +39,10 @@ class FileWatcher{
 		return $this->fileListeners;
 	}
 
+	protected function getFileWrappers(){
+		return $this->fileWrappers;
+	}
+
 	////////////////////////////////////////////////////////////////////////////////////
 	public function watch($path){
 		$file = new FileSystem(); 
@@ -45,7 +51,7 @@ class FileWatcher{
 	}
 
 	public function getWatchList(){
-		return $this->getListeners();
+		return array($this->getListeners(),$this->getFileWrappers());
 	}
 
 	public function start(){
@@ -54,8 +60,7 @@ class FileWatcher{
 		while($this->isWatching){
 			$t2 = microtime(true);
 			if($t2-$t1>$this->timeInterval){
-				echo 'stop watching';				
-				//$this->isWatching = false;
+				echo 'stop watching';
 				$this->stop();
 			}else{				
 				usleep(1000000); // be cautious about the time unit
