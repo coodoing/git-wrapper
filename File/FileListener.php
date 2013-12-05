@@ -58,6 +58,7 @@ class FileListener{
 		return $this->fileListeners;
 	}
 
+	/////////////////////////////////////////////////////////////////////////////////////
 	public function startListen(){
 		$t1 = microtime(true);
 		while($this->listening){
@@ -95,20 +96,6 @@ class FileListener{
 		}
 	}
 
-	public function listening($file){
-		$action = $this->getFileEventAction($file);
-		echo $file->getFilePath().'-'.$action.PHP_EOL;
-		//var_dump($this->actions[$action]);
-		//echo PHP_EOL;			
-		if(isset($this->actions[$action])){
-			//var_dump($this->actions[$file->getFilePath()][$action]);				
-			$callback = $this->actions[$action];
-			//echo $action.PHP_EOL;
-			//print_r($callback);
-			call_user_func($callback,$file->getFilePath());
-		}		
-	}
-
 	protected function getFileEventAction($file){
 		$fileStatus = $file->checkFileStatus();
 		if(!$fileStatus instanceof FileEvent){
@@ -128,6 +115,22 @@ class FileListener{
 			}
 		}
 	}
-	
+
+
+	/////////////////////////////////////////////////////////////////////////////////////
+	public function listening($file){
+		$action = $this->getFileEventAction($file);
+		echo $file->getFilePath().'-'.$action.PHP_EOL;
+		//var_dump($this->actions[$action]);
+		//echo PHP_EOL;			
+		if(isset($this->actions[$action])){
+			//var_dump($this->actions[$file->getFilePath()][$action]);				
+			$callback = $this->actions[$action];
+			//echo $action.PHP_EOL;
+			//print_r($callback);
+			call_user_func($callback,$file->getFilePath());
+		}		
+	}
+
 }
 ?>

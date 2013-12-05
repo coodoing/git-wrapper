@@ -17,7 +17,14 @@ class FileWatcher{
 		$this->fileWrappers = array(); //filewrapper
 	}
 
-	// add file to the specified listener
+	// binding the filewrapper and the listener, 
+	public function bindingListener(FileWrapper $fileWrapper, FileListener $listener){
+		$key = $fileWrapper->getSHA1();
+		$this->fileListeners[$key] = $listener;
+		$this->fileWrappers[$key] = $fileWrapper;
+	}
+
+	// add filewrapper to the default listener which have all listener events including create,delete and change 
 	protected function addListener(FileWrapper $fileWrapper){
 		$key = $fileWrapper->getSHA1();
 		$listener = new FileListener();
@@ -30,6 +37,7 @@ class FileWatcher{
 		return $this->fileListeners;
 	}
 
+	////////////////////////////////////////////////////////////////////////////////////
 	public function watch($path){
 		$file = new FileSystem(); 
 		$fileWrapper = new FileWrapper($path,$file);
